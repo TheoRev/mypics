@@ -1,0 +1,14 @@
+npm install electron-prebuilt-compile --save-dev
+npm install --save electron-compile
+npm install standard --save-dev
+npm install cross-env --save
+npm install --save-dev devtron
+npm i electron-debug -S
+
+
+--------------------------------------------------------
+LOOK AND FEEL
+--------------------------------------------------------
+1. http://photonkit.com/
+2. https://xel-toolkit.org/
+--------------------------------------------------------
