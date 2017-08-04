@@ -2,17 +2,21 @@
 
 import {
     app,
-    BrowserWindow
+    BrowserWindow,
+    ipcMain,
+    dialog
 } from 'electron'
 
 import devtools from './devtools'
+
+let win
 
 if (process.env.NODE_ENV === 'development') {
     devtools()
 }
 
 app.on('ready', () => {
-    let win = new BrowserWindow({
+    win = new BrowserWindow({
         width: 800,
         height: 600,
         title: 'Hola Mundo',
@@ -23,7 +27,7 @@ app.on('ready', () => {
 
     win.on('move', () => {
         const position = win.getPosition()
-        // console.log(`la posicion es: ${position}`);
+            // console.log(`la posicion es: ${position}`);
     })
 
     win.once('ready-to-show', () => {
@@ -32,7 +36,7 @@ app.on('ready', () => {
 
     win.on('closed', () => {
         win = null
-        // console.log("saliendo de la app")
+            // console.log("saliendo de la app")
         app.quit()
     })
 
@@ -42,5 +46,16 @@ app.on('ready', () => {
     // url local
     win.loadURL(`file://${__dirname}/renderer/index.html`)
 
-    win.toggleDevTools()
+    // win.toggleDevTools()
+})
+
+ipcMain.on('open-directory', (event) => {
+    dialog.showOpenDialog(win, {
+            title: 'Seleccione la nueva ubicación',
+            buttonLabel: 'Abrir ubicación',
+            properties: ['openDirectory']
+        },
+        (dir) => {
+            console.log(dir)
+        })
 })
